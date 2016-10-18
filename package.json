@@ -1,0 +1,15 @@
+{
+  "name": "steam-heatmap",
+  "author": {
+    "name": "Bob Zurad",
+    "url": "https://twitter.com/bobzurad"
+  },
+  "description": "an experiment",
+  "version": "0.0.1",
+  "repository": "https://github.com/bobzurad/steam-heatmap",
+  "private": true,
+  "license": "MIT",
+  "dependencies": {
+    "mariasql": "^0.2.6"
+  }
+}
