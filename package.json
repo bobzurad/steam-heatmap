@@ -10,6 +10,8 @@
   "private": true,
   "license": "MIT",
   "dependencies": {
-    "mariasql": "^0.2.6"
+    "mariasql": "^0.2.6",
+    "moment": "^2.15.1",
+    "request": "^2.75.0"
   }
 }
