@@ -35,8 +35,22 @@ request(url, (error, response, body) => {
       );
     }
 
+    c.query('select * from recentlyPlayed where date > date_sub(curdate(), interval 2 day);', 
+      {},
+      (error, rows) => {
+        if (error) {
+          console.log(error);
+        } else {
+          var minutesData = calculateMinutes(rows);
+        }
+      });
+
     c.end();
   } else {
     console.log(error);
   }
 });
+
+function calculateMinutes(data) {
+
+}
