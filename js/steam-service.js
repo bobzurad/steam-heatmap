@@ -4,21 +4,23 @@ const util = require('util');
 const request = require('request');
 const moment = require('moment');
 
-const log_file = fs.createWriteStream(__dirname + '/../debug.log', {flags : 'w'});
+//const log_file = fs.createWriteStream(__dirname + '/../debug.log', {flags : 'w'});
 
 const steamid = '76561197970976199';
 const url = 'http://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/?key=4AE08FBFA9A2DD49137F77B169B63720&steamid=76561197970976199&format=json';
 
+/*
 console.log = function(d) { //
   log_file.write(util.format(d) + '\n');
   process.stdout.write(util.format(d) + '\n');
 };
+*/
 
-console.log("starting");
+console.log(moment().format("YYYY-MM-DD:HH-mm-ss-SSS") + " - starting");
 
 request(url, (error, response, body) => {
   if (!error && response.statusCode === 200) {
-    console.log("got response");
+    console.log(moment().format("YYYY-MM-DD:HH-mm-ss-SSS") + " - got response");
 
     const data = JSON.parse(body);
     
@@ -42,29 +44,28 @@ request(url, (error, response, body) => {
         }, 
         (error, rows) =>  {
           if (error) {
-            console.log(error);
+              console.log(moment().format("YYYY-MM-DD:HH-mm-ss-SSS") + " - " + error);
           }
         }
-      );
+	     );
     }
-
-    console.log("data written");
+      console.log(moment().format("YYYY-MM-DD:HH-mm-ss-SSS") + " - data written");
 
     c.query('select * from recentlyPlayed where date > date_sub(curdate(), interval 2 day);', 
       {},
       (error, rows) => {
         if (error) {
-          console.log(error);
+            console.log(moment().format("YYYY-MM-DD:HH-mm-ss-SSS") + " - " + error);
         } else {
-          console.log("calculating minutes");
+            console.log(moment().format("YYYY-MM-DD:HH-mm-ss-SSS") + " - calculating minutes");
           var minutesData = calculateMinutes(rows);
-          console.log("done");
+            console.log(moment().format("YYYY-MM-DD:HH-mm-ss-SSS") + " - done");
         }
       });
 
     c.end();
   } else {
-    console.log(error);
+      console.log(moment().format("YYYY-MM-DD:HH-mm-ss-SSS") + " - " + error);
   }
 });
 
