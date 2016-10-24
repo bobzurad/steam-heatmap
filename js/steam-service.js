@@ -1,14 +1,27 @@
-var Client = require('mariasql');
+const Client = require('mariasql');
+const fs = require('fs');
+const util = require('util');
 const request = require('request');
 const moment = require('moment');
+
+const log_file = fs.createWriteStream(__dirname + '/../debug.log', {flags : 'w'});
+
 const steamid = '76561197970976199';
 const url = 'http://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/?key=4AE08FBFA9A2DD49137F77B169B63720&steamid=76561197970976199&format=json';
 
+console.log = function(d) { //
+  log_file.write(util.format(d) + '\n');
+  process.stdout.write(util.format(d) + '\n');
+};
+
+console.log("starting");
 
 request(url, (error, response, body) => {
   if (!error && response.statusCode === 200) {
-    const data = JSON.parse(body);
+    console.log("got response");
 
+    const data = JSON.parse(body);
+    
     var c = new Client({
       host: 'localhost',
       user: 'steam',
@@ -35,13 +48,17 @@ request(url, (error, response, body) => {
       );
     }
 
+    console.log("data written");
+
     c.query('select * from recentlyPlayed where date > date_sub(curdate(), interval 2 day);', 
       {},
       (error, rows) => {
         if (error) {
           console.log(error);
         } else {
+          console.log("calculating minutes");
           var minutesData = calculateMinutes(rows);
+          console.log("done");
         }
       });
 
