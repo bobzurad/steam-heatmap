@@ -29,6 +29,11 @@ create table if not exists recentlyPlayed (
   primary key (steamid, date, appid)
 );
 
+alter table recentlyPlayed
+  add column if not exists playtime_today
+    int not null default -1
+    after name;
+
 create user 'steam'@'localhost';
 grant insert on steam.games to 'steam'@'localhost';
 grant select on steam.games to 'steam'@'localhost';
@@ -36,4 +41,5 @@ grant insert on steam.heatmap to 'steam'@'localhost';
 grant select on steam.heatmap to 'steam'@'localhost';
 grant insert on steam.recentlyPlayed to 'steam'@'localhost';
 grant select on steam.recentlyPlayed to 'steam'@'localhost';
+grant update on steam.recentlyPlayed to 'steam'@'localhost';
 flush privileges;
