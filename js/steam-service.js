@@ -32,11 +32,12 @@ request(url, (error, response, body) => {
     });
 
     for (var i = 0; i < data.response.total_count; i++) {
-      c.query('insert into recentlyPlayed values (:steamid, :date, :appid, :name, :playtime_2weeks, :playtime_forever, :img_icon_url, :img_logo_url)', {
+      c.query('insert into recentlyPlayed values (:steamid, :date, :appid, :name, :playtime_today, :playtime_2weeks, :playtime_forever, :img_icon_url, :img_logo_url)', {
           steamid: steamid,
           date: moment().format('YYYY-MM-DD'),
           appid: data.response.games[i].appid,
           name: data.response.games[i].name,
+          playtime_today: -1,
           playtime_2weeks: data.response.games[i].playtime_2weeks,
           playtime_forever: data.response.games[i].playtime_forever,
           img_icon_url: data.response.games[i].img_icon_url,
