@@ -1,6 +1,9 @@
 # mariadb in docker
 /database
 
+# .env file
+.env
+
 # Logs
 logs
 *.log

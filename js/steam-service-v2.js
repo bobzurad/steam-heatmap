@@ -10,10 +10,10 @@ function getRecentlyPlayedGames(steamid, url) {
       process.stdout.write(new Date() + " - got response\n");
 
       const pool = mariadb.createPool({
-        host: "localhost",
-        user: "steam",
-        password: "steamhm",
-        database: "steam",
+        host: process.env.MARIADB_HOST,
+        user: process.env.MARIADB_USER,
+        password: process.env.MARIADB_PASSWORD,
+        database: process.env.MARIADB_DATABASE,
       });
 
       res.on("data", async (d) => {
@@ -47,6 +47,15 @@ function getRecentlyPlayedGames(steamid, url) {
           }
         }
       });
+    } else {
+      process.stdout.write(
+        new Date() +
+          " - Invalid Response Status Code: " +
+          res.statusCode +
+          " for url: " +
+          url +
+          "\n",
+      );
     }
   }).on("error", (error) => {
     process.stdout.write(new Date() + " - " + error);

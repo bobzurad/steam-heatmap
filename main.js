@@ -1,9 +1,15 @@
+import { loadEnvFile } from 'node:process';
 import { getRecentlyPlayedGames } from "./js/steam-service-v2.js";
 
-const steamid = "76561197970976199";
+loadEnvFile();
+
+const steamId = process.env.STEAM_ID;
+const steamApiKey = process.env.STEAM_API_KEY;
 const url =
-  "https://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/?key=4AE08FBFA9A2DD49137F77B169B63720&steamid=" +
-  steamid +
+  "https://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/?key=" +
+  steamApiKey +
+  "&steamid=" +
+  steamId +
   "&format=json";
 
-getRecentlyPlayedGames(steamid, url);
+getRecentlyPlayedGames(steamId, url);

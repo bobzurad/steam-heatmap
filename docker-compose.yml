@@ -3,6 +3,8 @@ services:
     image: mariadb:12.3
     restart: unless-stopped
     stop_grace_period: 15s
+    env_file:
+      - .env
     security_opt: # see https://github.com/MariaDB/mariadb-docker/issues/434#issuecomment-1136151239
       - seccomp:unconfined
       - apparmor:unconfined
@@ -14,7 +16,7 @@ services:
     ## See https://mariadb.com/docs/server/server-management/automated-mariadb-deployment-and-administration/docker-and-mariadb/mariadb-server-docker-official-image-environment-variables
     environment:
       MARIADB_AUTO_UPGRADE: "1"
-      MARIADB_DATABASE: "steam"
-      MARIADB_USER: "steam"
-      MARIADB_PASSWORD: "steamhm"
-      MARIADB_ROOT_PASSWORD: "steamhm"
+      MARIADB_DATABASE: ${MARIADB_DATABASE}
+      MARIADB_USER: ${MARIADB_USER}
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
