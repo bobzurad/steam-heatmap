@@ -1,26 +1,27 @@
 import { get } from "node:https";
 import process from "node:process";
-import mariadb from "mariadb";
+import mariadb, { type Pool, type PoolConnection } from "mariadb";
+import type { IncomingMessage } from "node:http";
 
-function getRecentlyPlayedGames(steamid, url) {
+function getRecentlyPlayedGames(steamid: string, url: string) {
   process.stdout.write(new Date() + " - starting\n");
 
-  get(url, (res) => {
+  get(url, (res: IncomingMessage) => {
     if (res.statusCode === 200) {
       process.stdout.write(new Date() + " - got response\n");
 
       const pool = mariadb.createPool({
-        host: process.env.MARIADB_HOST,
-        user: process.env.MARIADB_USER,
-        password: process.env.MARIADB_PASSWORD,
-        database: process.env.MARIADB_DATABASE,
-      });
+        host: process.env.MARIADB_HOST as string,
+        user: process.env.MARIADB_USER as string,
+        password: process.env.MARIADB_PASSWORD as string,
+        database: process.env.MARIADB_DATABASE as string,
+      }) as Pool;
 
       res.on("data", async (d) => {
         const data = JSON.parse(d);
 
         if (data.response.total_count > 0) {
-          let conn;
+          let conn: PoolConnection | undefined;
           try {
             conn = await pool.getConnection();
             for (let i = 0; i < data.response.total_count; i++) {
