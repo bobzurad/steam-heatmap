@@ -4,6 +4,9 @@
 # .env file
 .env
 
+# typescript build files
+dist/
+
 # Logs
 logs
 *.log
