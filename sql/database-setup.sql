@@ -1,7 +1,3 @@
---this script written for MariaDB 10.1 https://mariadb.org/
-
-create database steam;
-
 use steam;
 
 create table if not exists games (
@@ -28,12 +24,3 @@ create table if not exists recentlyPlayed (
   img_logo_url varchar(255),
   primary key (steamid, date, appid)
 );
-
-create user 'steam'@'localhost';
-grant insert on steam.games to 'steam'@'localhost';
-grant select on steam.games to 'steam'@'localhost';
-grant insert on steam.heatmap to 'steam'@'localhost';
-grant select on steam.heatmap to 'steam'@'localhost';
-grant insert on steam.recentlyPlayed to 'steam'@'localhost';
-grant select on steam.recentlyPlayed to 'steam'@'localhost';
-flush privileges;

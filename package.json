@@ -2,16 +2,19 @@
   "name": "steam-heatmap",
   "author": {
     "name": "Bob Zurad",
-    "url": "https://twitter.com/bobzurad"
+    "url": "https://github.com/bobzurad"
   },
-  "description": "an experiment",
-  "version": "0.0.1",
+  "description": "a nodejs script to download steam user data",
+  "type": "module",
+  "version": "1.0.0",
   "repository": "https://github.com/bobzurad/steam-heatmap",
   "private": true,
   "license": "MIT",
   "dependencies": {
-    "mariasql": "^0.2.6",
-    "moment": "^2.15.1",
-    "request": "^2.75.0"
+    "mariadb": "~3.5.3"
+  },
+  "devDependencies": {
+    "@types/node": "^26.4.0",
+    "typescript": "^7.0.2"
   }
 }
