@@ -13,6 +13,7 @@ This project also requires [Docker](https://docs.docker.com) to run the MariaDB 
 If you are running the project for the first time, perform the following steps:
 
 * Copy the variables in `.env.example` to `.env` and provide necessary values
+    * Note: You can get a Steam API key [here](https://steamcommunity.com/dev/apikey)
 * Start the MariaDB instance: `docker compose up`
 * Create the database: `mariadb -D steam -P 3306 -u steam -p < ./sql/database-setup.sql`
     * Note: this assumes the database and MariaDB user are named `steam`
